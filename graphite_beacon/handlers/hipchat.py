@@ -1,4 +1,4 @@
-import urllib
+import urllib, json, requests
 from tornado import gen, httpclient as hc
 
 from . import AbstractHandler, LOGGER
@@ -31,16 +31,18 @@ class HipChatHandler(AbstractHandler):
     def notify(self, level, *args, **kwargs):
         LOGGER.debug("Handler (%s) %s", self.name, level)
 
-        message = self.get_short(level, *args, **kwargs)
         data = {
-            'room_id': self.room,
-            'from': self.prefix,
-            'message': message,
-            'notify': 1,
-            'color': self.colors.get(level, 'blue'),
+            'message': self.get_short(level, *args, **kwargs),
             'message_format': 'text',
+            'notify': True,
+            'color': self.colors.get(level, 'gray'),
         }
-        body = urllib.urlencode(data)
-        yield self.client.fetch(
-            'https://api.hipchat.com/v1/rooms/message?auth_token=' + self.key,
-            method='POST', body=body)
+
+        r = requests.post(
+            url = 'https://api.hipchat.com/v2/room/{room}/notification'.format(room = self.room),
+            params = {'auth_token': self.key,},
+            headers = {'Content-Type': 'application/json'},
+            data = json.dumps(data)
+        )
+
+        r.raise_for_status()
