@@ -43,9 +43,17 @@ class AbstractHandler(_.with_metaclass(HandlerMeta)):
         LOGGER.debug('Handler "%s" has inited: %s', self.name, self.options)
 
     def get_short(self, level, alert, value, target=None, ntype=None, rule=None):
+
+        def getEnv(alert):
+            if 'resources-' in alert.query:
+                # 'stats_counts.resources-ETSMT001.cpu => ETSMT001.cpu'
+                s = q.replace('stats_counts.resources-','')
+                # ETSMT001.cpu => ETSMT001
+                return s[:s.find('.')]
+
         tmpl = TEMPLATES[ntype]['short']
         return tmpl.generate(
-            level=level, reactor=self.reactor, alert=alert, value=value, target=target).strip()
+            level=level, reactor=self.reactor, alert=alert, value=value, target=target, env = getEnv(alert)).strip()
 
     def init_handler(self):
         """ Init configuration here."""
