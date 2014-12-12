@@ -1,6 +1,6 @@
 {% if level == 'normal' %}
-normal: <strong>{{ env }} {{ alert.name }}</strong> normal
+<strong>{{ env }} {{ alert.name }}</strong> normal
 {% else %}
-warning: <strong>{{ env }} {{ alert.name }}</strong> = {{ alert.convert(value) }}
+<strong>{{ env }} {{ alert.name }}</strong> = {{ alert.convert(value) }}
 {% end %}
 

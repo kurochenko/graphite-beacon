@@ -33,7 +33,7 @@ class HipChatHandler(AbstractHandler):
 
         data = {
             'message': self.get_short(level, *args, **kwargs),
-            'message_format': 'text',
+            'message_format': 'html',
             'notify': True,
             'color': self.colors.get(level, 'gray'),
         }

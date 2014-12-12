@@ -44,16 +44,18 @@ class AbstractHandler(_.with_metaclass(HandlerMeta)):
 
     def get_short(self, level, alert, value, target=None, ntype=None, rule=None):
 
-        def getEnv(alert):
-            if 'resources-' in alert.query:
+        def getEnv(metricName):
+            if 'resources-' in metricName:
                 # 'stats_counts.resources-ETSMT001.cpu => ETSMT001.cpu'
-                s = alert.query.replace('stats_counts.resources-','')
+                s = metricName.replace('stats_counts.resources-','')
                 # ETSMT001.cpu => ETSMT001
                 return s[:s.find('.')]
+            else:
+                return 'UNKNOWN'
 
         tmpl = TEMPLATES[ntype]['short']
         return tmpl.generate(
-            level=level, reactor=self.reactor, alert=alert, value=value, target=target, env = getEnv(alert)).strip()
+            level=level, reactor=self.reactor, alert=alert, value=value, target=target, env = getEnv(target)).strip()
 
     def init_handler(self):
         """ Init configuration here."""
