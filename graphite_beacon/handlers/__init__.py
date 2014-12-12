@@ -47,7 +47,7 @@ class AbstractHandler(_.with_metaclass(HandlerMeta)):
         def getEnv(alert):
             if 'resources-' in alert.query:
                 # 'stats_counts.resources-ETSMT001.cpu => ETSMT001.cpu'
-                s = q.replace('stats_counts.resources-','')
+                s = alert.query.replace('stats_counts.resources-','')
                 # ETSMT001.cpu => ETSMT001
                 return s[:s.find('.')]
 

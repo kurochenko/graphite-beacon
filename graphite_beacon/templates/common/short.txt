@@ -1,6 +1,6 @@
 {% if level == 'normal' %}
-{{ reactor.options.get('prefix') }} {{level.upper()}} <{{ alert.name }}> is back to normal.
+normal: <strong>{{ env }} {{ alert.name }}</strong> normal
 {% else %}
-{{ reactor.options.get('prefix') }} {{ level.upper() }} <{{ alert.name }}> {{ value }}
+warning: <strong>{{ env }} {{ alert.name }}</strong> = {{ alert.convert(value) }}
 {% end %}
 
