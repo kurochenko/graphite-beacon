@@ -71,3 +71,4 @@ from .http import HttpHandler       # noqa
 from .log import LogHandler         # noqa
 from .slack import SlackHandler     # noqa
 from .smtp import SMTPHandler       # noqa
+from .cli import CliHandler         # noqa
