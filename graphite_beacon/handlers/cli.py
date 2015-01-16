@@ -26,11 +26,15 @@ class CliHandler(AbstractHandler):
         '''
         name, value = args
 
+        # 'stats_counts.app-production_xvie1.resources.cpu' => 'production_xvie1'
+        instance = str(kwargs['target'].split('.')[1][4:])
+
         substitutes = {
             '${level}': str(level),
             '${name}': '"' + str(name) + '"',
             '${value}': str(value),
             '${limit_value}': str(kwargs['rule']['value']),
+            '${instance}': instance,
         }
 
         result = command
