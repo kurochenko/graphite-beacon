@@ -48,7 +48,7 @@ class AbstractHandler(_.with_metaclass(HandlerMeta)):
             if metricName.startswith('stats.gauges.resources-'):
                 s = metricName.replace('stats.gauges.resources-','')
                 return s[:s.find('.')]
-            elif metricName.startswith('stats.gauges.app-')
+            elif metricName.startswith('stats.gauges.app-'):
                 s = metricName.replace('stats.gauges.app-','')
                 return s[:s.find('.')]
             else:
