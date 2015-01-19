@@ -45,10 +45,11 @@ class AbstractHandler(_.with_metaclass(HandlerMeta)):
     def get_short(self, level, alert, value, target=None, ntype=None, rule=None):
 
         def getEnv(metricName):
-            if 'resources-' in metricName:
-                # 'stats_counts.resources-ETSMT001.cpu => ETSMT001.cpu'
-                s = metricName.replace('stats_counts.resources-','')
-                # ETSMT001.cpu => ETSMT001
+            if metricName.startswith('stats.gauges.resources-'):
+                s = metricName.replace('stats.gauges.resources-','')
+                return s[:s.find('.')]
+            elif metricName.startswith('stats.gauges.app-')
+                s = metricName.replace('stats.gauges.app-','')
                 return s[:s.find('.')]
             else:
                 return 'UNKNOWN'
