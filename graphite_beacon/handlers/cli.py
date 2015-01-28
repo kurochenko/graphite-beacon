@@ -26,8 +26,8 @@ class CliHandler(AbstractHandler):
         '''
         name, value = args
 
-        # 'stats_counts.app-production_xvie1.resources.cpu' => 'production_xvie1'
-        instance = str(kwargs['target'].split('.')[1][4:])
+        # 'stats.gauges.app-XXXX.resources.cpu' => XXXX
+        instance = str(kwargs['target'].split('.')[2][4:])
 
         substitutes = {
             '${level}': str(level),
